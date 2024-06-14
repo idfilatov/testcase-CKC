@@ -24,8 +24,7 @@ def create_app():
     app = FastAPI(title='Ships', lifespan=lifespan)
 
     origins = [
-        "http://localhost",
-        "http://0.0.0.0",
+        '*'
     ]
     app.add_middleware(
         CORSMiddleware,

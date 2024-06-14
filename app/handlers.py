@@ -61,7 +61,7 @@ async def save_ship_point(ship_id: int, point_data: dto.Position, session: orm.S
     session.commit()
 
     data = dto.ShipPosition(
-        ship_id=1,
+        ship_id=ship_id,
         **point_data.model_dump()
     )
     await manager.broadcast(data=data.model_dump())
