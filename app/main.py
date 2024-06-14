@@ -9,7 +9,7 @@ from fastapi import (
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from app.db._support import _utils
+from app._support import _utils
 from app import routes
 
 

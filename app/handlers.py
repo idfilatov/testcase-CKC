@@ -6,6 +6,7 @@ from sqlalchemy import orm
 
 from app import dto
 from app.db import models as db_models
+from app.manager import manager
 
 
 def get_ship_info(session: orm.Session, ship_id: int) -> db_models.Ship:
@@ -46,7 +47,7 @@ def get_ships_last_positions(session: orm.Session):
     return dto_items
 
 
-def save_ship_point(ship_id: int, point_data: dto.Position, session: orm.Session):
+async def save_ship_point(ship_id: int, point_data: dto.Position, session: orm.Session):
     ship_item = get_ship_info(session=session, ship_id=ship_id)
     new_point = db_models.RoutePoint(
         ship_id=ship_id,
@@ -58,3 +59,9 @@ def save_ship_point(ship_id: int, point_data: dto.Position, session: orm.Session
     session.flush()
     ship_item.last_point_id = new_point.id
     session.commit()
+
+    data = dto.ShipPosition(
+        ship_id=1,
+        **point_data.model_dump()
+    )
+    await manager.broadcast(data=data.model_dump())
