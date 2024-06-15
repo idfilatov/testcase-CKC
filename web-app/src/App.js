@@ -154,8 +154,12 @@ const App = () => {
 
             <img src={modalData.photo} alt={`${modalData.name}`} style={{ width: '100%' }} />
             <div className='ModalShipInfo'>
-              <div>Регистрационный номер: {modalData.registration_number}</div>
+              <div>Рег. номер: {modalData.registration_number}</div>
+              <div>Широта: {modalData.lat.toFixed(3)}</div>
+            </div>
+            <div className='ModalShipInfo'>
               <div>Скорость: {modalData.speed.toFixed(2)}</div>
+              <div>Долгота: {modalData.lon.toFixed(3)}</div>
             </div>
             <button className="ModalRouteButton" onClick={() => fetchShipRoute(modalData.ship_id)}>Показать маршрут</button>
           </div>
