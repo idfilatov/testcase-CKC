@@ -15,9 +15,8 @@ from app import routes
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    session = _utils.generate_mock_ships()
+    _utils.generate_mock_ships()
     yield
-    _utils.drop_mock_ships(session)
 
 
 def create_app():

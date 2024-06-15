@@ -81,6 +81,14 @@ const App = () => {
     }
   };
 
+  const handleStartShipsClick = async () => {
+    try {
+      await axios.get(`http://localhost:8000/ships/move`);
+    } catch (error) {
+      console.error('Error fetching ship data:', error);
+    }
+  };
+
   const fetchShipRoute = async (ship_id) => {
     try {
       const response = await axios.get(`http://localhost:8000/ships/${ship_id}/route`);
@@ -98,6 +106,7 @@ const App = () => {
 
   return (
     <div>
+      <button onClick={() => handleStartShipsClick()} className='StartSimulation'>Начать движение кораблей</button>
       <YMaps>
         <Map defaultState={{ center: [15, -72.1], zoom: 6 }} width="100vw" height="100vh" >
           {

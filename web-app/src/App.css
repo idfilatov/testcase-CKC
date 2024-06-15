@@ -82,3 +82,12 @@
 .ModalRouteButton:hover {
   background-color: rgb(92, 92, 92)
 }
+
+.StartSimulation {
+  position: absolute;
+  z-index: 2;
+  width: 20%;
+  height: 30px;
+  background-color: chartreuse;
+  cursor: pointer;
+}

@@ -11,14 +11,13 @@ url = 'http://localhost:8000/ships/{ship_id}/point'
 async def send_route_for_ship(session, ship_id):
     filename = f'{ship_id}_route.json'
     route = _utils.load_route(filename)
-    for point in route[1:]:
+    for point in route:
         data = {'ship_id': ship_id}
-        # await asyncio.sleep(random.randint(0, 2))  # Задержка перед запросом
-        await asyncio.sleep(1)  # Задержка перед запросом
+        await asyncio.sleep(random.randint(1, 4))  # Задержка перед запросом
+        # await asyncio.sleep(1)  # Задержка перед запросом
         data['longitude'] = point[0]
         data['latitude'] = point[1]
         data['speed'] = random.uniform(2, 5)
-        print(f'send data {data}')
         try:
             async with session.post(url.format(ship_id=ship_id), json=data) as response:
                 await response.text()

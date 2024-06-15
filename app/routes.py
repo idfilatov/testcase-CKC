@@ -8,7 +8,7 @@ from sqlalchemy import orm
 from app import dto, handlers
 from app.db.utils import get_db_connection
 from app.manager import manager
-from app.config import logger
+
 
 router = fastapi.APIRouter(prefix="/ships", tags=['Ship'])
 
@@ -16,11 +16,14 @@ router = fastapi.APIRouter(prefix="/ships", tags=['Ship'])
 @router.get(
     path='/move'
 )
-async def start_ship_moves():
+async def start_ship_moves(session: orm.Session = fastapi.Depends(get_db_connection)):
     """
-    Служебный эндпоинт для запуска имитации поступления данных о положении кораблей
+    Служебный эндпоинт для запуска имитации поступления данных о положении кораблей\n
+    При каждом вызове очистит таблицу точек, и начнет выстраивать маршрут заново
     """
     from app import ship_mover
+    from app._support._utils import drop_routes
+    drop_routes(session)
     await ship_mover.main()
 
 

@@ -70,8 +70,6 @@ def generate_mock_ships():
     session.commit()
 
 
-
-def drop_mock_ships(session):
-    session.query(Ship).delete()
+def drop_routes(session):
     session.query(RoutePoint).delete()
     session.commit()
