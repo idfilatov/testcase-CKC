@@ -1,44 +1,84 @@
-.App {
+.ModalOverlay {
+  background-color: rgba(0, 0, 0, 0.0);
+}
+
+.ModalContent {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 400px;
+  height: fit-content;
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+.ModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ModalShipName {
+  margin-bottom: 3px;
+  text-align: center;
+  font-size: x-large;
+  font-weight: 600;
+  flex-grow: 1;
+  text-align: center;
+  margin-left: 20px;
+}
+
+.ModalHeaderCloseButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+.ModalHeaderCloseButton::before,
+.ModalHeaderCloseButton::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background-color: black;
+}
+
+.ModalHeaderCloseButton::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.ModalHeaderCloseButton::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.ModalShipInfo {
+  color: darkslategray;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ModalRouteButton {
+  background-color: darkslategray;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+  width: 100%;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
-.ModalInfo {
-  width: 400px;
+.ModalRouteButton:hover {
+  background-color: rgb(92, 92, 92)
 }
