@@ -51,42 +51,6 @@ def generate_mock_ships():
     session.add_all(ships)
     session.flush()
 
-
-    # black_pearl_start_point = RoutePoint(
-    #     ship_id=black_pearl.id,
-    #     longitude=load_route('1_route.json')[0][0],
-    #     latitude=load_route('1_route.json')[0][1],
-    #     speed=0
-    # )
-    #
-    # dutchman_start_point = RoutePoint(
-    #     ship_id=dutchman.id,
-    #     longitude=load_route('3_route.json')[0][0],
-    #     latitude=load_route('3_route.json')[0][1],
-    #     speed=0
-    # )
-    #
-    # mary_start_point = RoutePoint(
-    #     ship_id=mary.id,
-    #     longitude=load_route('4_route.json')[0][0],
-    #     latitude=load_route('4_route.json')[0][1],
-    #     speed=0
-    # )
-    #
-    # queen_anne_start_point = RoutePoint(
-    #     ship_id=queen_anne.id,
-    #     longitude=load_route('5_route.json')[0][0],
-    #     latitude=load_route('5_route.json')[0][1],
-    #     speed=0
-    # )
-    #
-    # dauntless_start_point = RoutePoint(
-    #     ship_id=dauntless.id,
-    #     longitude=load_route('2_route.json')[0][0],
-    #     latitude=load_route('2_route.json')[0][1],
-    #     speed=0
-    # )
-
     start_points = [RoutePoint(
         ship_id=item.id,
         longitude=load_route(f'{item.id}_route.json')[0][0],
