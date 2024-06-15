@@ -8,9 +8,20 @@ from sqlalchemy import orm
 from app import dto, handlers
 from app.db.utils import get_db_connection
 from app.manager import manager
+from app.config import logger
 
-logger = logging.getLogger(__name__)
 router = fastapi.APIRouter(prefix="/ships", tags=['Ship'])
+
+
+@router.get(
+    path='/move'
+)
+async def start_ship_moves():
+    """
+    Служебный эндпоинт для запуска имитации поступления данных о положении кораблей
+    """
+    from app import ship_mover
+    await ship_mover.main()
 
 
 @router.get(
@@ -72,9 +83,7 @@ def get_ship_route(
 
 @router.websocket(path='/ws')
 async def ships_updates(websocket: fastapi.WebSocket):
-
     await manager.connect(websocket)
-    print(f'new connection {websocket=}')
     try:
         while True:
             await websocket.receive_text()
