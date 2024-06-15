@@ -12,11 +12,6 @@ class RoutePoint(pydantic.BaseModel):
     latitude: float
 
 
-class Route(pydantic.BaseModel):
-    ship_id: int
-    points: list[RoutePoint]
-
-
 class Position(pydantic.BaseModel):
     longitude: float
     latitude: float

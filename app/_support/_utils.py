@@ -1,7 +1,5 @@
 import os
 import json
-import uuid
-import datetime
 
 from app.db.models import Ship, RoutePoint
 from app.db.utils import get_db_connection
