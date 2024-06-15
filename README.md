@@ -23,7 +23,7 @@
 #### :snake: Поставить python (при разработке использовался 3.11)  
 
 #### :desktop_computer: Запустить бекенд
-В папке `/app`:
+В корне:
 
 - `python -m venv .venv`
 - `source .venv/bin/activate (Linux)`  
