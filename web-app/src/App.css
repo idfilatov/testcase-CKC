@@ -1,12 +1,70 @@
+.color1 {
+  color: #092d30;
+}
+
+.color2 {
+  color: #185a70;
+}
+
+.color3 {
+  color: #2084a1;
+}
+
+.color4 {
+  color: #6fbfc8;
+}
+
+.color5 {
+  color: #dbeded;
+}
+
+header {
+  background: linear-gradient(to right, #185a70, #6fbfc8);
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+header .start-button {
+  background-color: #185a70;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+header .start-button:hover {
+  background-color: #2084a1;
+}
+
+header .start-button:disabled {
+  background-color: #bbd0d6b0;
+}
+
 .ModalOverlay {
   background-color: rgba(0, 0, 0, 0.0);
 }
 
 .ModalContent {
   position: absolute;
-  top: 20px;
+  top: 100px;
   right: 20px;
-  width: 400px;
+  width: 20%;
+  min-width: 280px;
   height: fit-content;
   background-color: white;
   border: 1px solid gray;
@@ -62,16 +120,17 @@
 }
 
 .ModalShipInfo {
-  color: darkslategray;
+  color: #092d30;
   display: flex;
   justify-content: space-between;
 }
 
 .ModalRouteButton {
-  background-color: darkslategray;
+  background-color: #185a70;
   color: white;
   padding: 5px 10px;
   border-radius: 4px;
+  border-color: #185a70;
   cursor: pointer;
   font-size: 14px;
   margin-top: 10px;
@@ -80,14 +139,6 @@
 }
 
 .ModalRouteButton:hover {
-  background-color: rgb(92, 92, 92)
-}
-
-.StartSimulation {
-  position: absolute;
-  z-index: 2;
-  width: 20%;
-  height: 30px;
-  background-color: chartreuse;
-  cursor: pointer;
+  background-color: #2084a1;
+  border-color: #2084a1
 }

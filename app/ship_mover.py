@@ -13,8 +13,8 @@ async def send_route_for_ship(session, ship_id):
     route = _utils.load_route(filename)
     for point in route:
         data = {'ship_id': ship_id}
-        await asyncio.sleep(random.randint(1, 4))  # Задержка перед запросом
-        # await asyncio.sleep(1)  # Задержка перед запросом
+        # await asyncio.sleep(random.randint(1, 4))  # Задержка перед запросом
+        await asyncio.sleep(1)  # Задержка перед запросом
         data['longitude'] = point[0]
         data['latitude'] = point[1]
         data['speed'] = random.uniform(2, 5)

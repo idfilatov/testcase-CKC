@@ -6,11 +6,35 @@ import axios from 'axios';
 Modal.setAppElement('#root');
 
 
+const MyModal = ({ modalData, onCloseModal, onClickRoute }) => {
+  return (
+    <div>
+      <div className='ModalHeader'>
+        <div className='ModalShipName'>{modalData.name}</div>
+        <button className='ModalHeaderCloseButton' onClick={onCloseModal} />
+      </div>
+
+      <img src={modalData.photo} alt={`${modalData.name}`} style={{ width: '100%' }} />
+      <div className='ModalShipInfo'>
+        <div>Рег. номер: {modalData.registration_number}</div>
+        <div>Широта: {modalData.lat.toFixed(3)}</div>
+      </div>
+      <div className='ModalShipInfo'>
+        <div>Скорость: {modalData.speed.toFixed(2)}</div>
+        <div>Долгота: {modalData.lon.toFixed(3)}</div>
+      </div>
+      <button className="ModalRouteButton" onClick={() => onClickRoute(modalData.ship_id)}>Показать маршрут</button>
+    </div>
+  )
+}
+
+
 const App = () => {
   const [ships, setShips] = useState({});
   const [selectedShip, setSelectedShip] = useState(null);
   const [route, setRoute] = useState(null);
   const [modalData, setModalData] = useState(null);
+  const [simulation, setSimulation] = useState(false);
 
   const fetchInitialData = async () => {
     try {
@@ -83,9 +107,13 @@ const App = () => {
 
   const handleStartShipsClick = async () => {
     try {
-      await axios.get(`http://localhost:8000/ships/move`);
+      setSimulation(true);
+      fetchInitialData();
+      const response = await axios.get(`http://localhost:8000/ships/move`);
+      setSimulation(false);
     } catch (error) {
       console.error('Error fetching ship data:', error);
+      setSimulation(false);
     }
   };
 
@@ -106,39 +134,49 @@ const App = () => {
 
   return (
     <div>
-      <button onClick={() => handleStartShipsClick()} className='StartSimulation'>Начать движение кораблей</button>
-      <YMaps>
-        <Map defaultState={{ center: [15, -72.1], zoom: 6 }} width="100vw" height="100vh" >
-          {
-            Object.keys(ships).map((shipId) =>
-              <Placemark
-                onClick={() => handlePlacemarkClick(shipId)}
-                key={shipId}
-                options={{
-                  iconLayout: 'default#image',
-                  iconImageHref: shipId === selectedShip ? '/shipmark-selected.png' : '/shipmark.png',
-                  iconImageSize: [45, 45],
-                }}
-                geometry={[ships[shipId].lat, ships[shipId].lon]}
-              />
-            )
-          }
+      <header>
+        <h1>ShipRadar</h1>
+        <button disabled={simulation} onClick={() => handleStartShipsClick()} className='start-button'>Начать движение кораблей</button>
 
-          {route && <Polyline
-            geometry={route.map((point) => [point.latitude, point.longitude])}
-            options={{
-              strokeColor: "#000",
-              strokeWidth: 4,
-              strokeOpacity: 0.7,
-              strokeStyle: {
-                style: 'dot',
-                offset: 10
-              }
-            }}
-          />
-          }
-        </Map>
-      </YMaps>
+      </header>
+      <div>
+        <YMaps>
+          <Map
+            defaultState={{ center: [59.95, 30], zoom: 11 }}
+            options={{ mapAutoFit: true }}
+            width="100vw" height="100vh"
+
+          >
+            {
+              Object.keys(ships).map((shipId) =>
+                <Placemark
+                  onClick={() => handlePlacemarkClick(shipId)}
+                  key={shipId}
+                  options={{
+                    preset: "islands#circleDotIcon",
+                    iconColor: shipId === selectedShip ? "#185a70" : "#6fbfc8",
+                  }}
+                  geometry={[ships[shipId].lat, ships[shipId].lon]}
+                />
+              )
+            }
+
+            {route && <Polyline
+              geometry={route.map((point) => [point.latitude, point.longitude])}
+              options={{
+                strokeColor: "#000",
+                strokeWidth: 4,
+                strokeOpacity: 0.7,
+                strokeStyle: {
+                  style: 'dot',
+                  offset: 10
+                }
+              }}
+            />
+            }
+          </Map>
+        </YMaps>
+      </div>
       <Modal
         isOpen={selectedShip !== null}
         onRequestClose={closeModal}
@@ -146,23 +184,11 @@ const App = () => {
         className="ModalContent"
       >
         {modalData && (
-          <div>
-            <div className='ModalHeader'>
-              <div className='ModalShipName'>{modalData.name}</div>
-              <button className='ModalHeaderCloseButton' onClick={closeModal} />
-            </div>
-
-            <img src={modalData.photo} alt={`${modalData.name}`} style={{ width: '100%' }} />
-            <div className='ModalShipInfo'>
-              <div>Рег. номер: {modalData.registration_number}</div>
-              <div>Широта: {modalData.lat.toFixed(3)}</div>
-            </div>
-            <div className='ModalShipInfo'>
-              <div>Скорость: {modalData.speed.toFixed(2)}</div>
-              <div>Долгота: {modalData.lon.toFixed(3)}</div>
-            </div>
-            <button className="ModalRouteButton" onClick={() => fetchShipRoute(modalData.ship_id)}>Показать маршрут</button>
-          </div>
+          <MyModal
+            modalData={modalData}
+            onCloseModal={closeModal}
+            onClickRoute={() => fetchShipRoute(modalData.ship_id)}
+          />
         )}
       </Modal>
     </div>
