@@ -15,15 +15,16 @@ const MyModal = ({ modalData, onCloseModal, onClickRoute }) => {
       </div>
 
       <img src={modalData.photo} alt={`${modalData.name}`} style={{ width: '100%' }} />
+
+      <div className='ModalShipReg'>Регистрационный номер: {modalData.registration_number}</div>
       <div className='ModalShipInfo'>
-        <div>Рег. номер: {modalData.registration_number}</div>
-        <div>Широта: {modalData.lat.toFixed(3)}</div>
+        <div className='ModalShipInfoPiece'>Скорость:<br></br>{modalData.speed.toFixed(2)}</div>
+        <div className='ModalShipInfoPiece'>Широта:<br></br>{modalData.lat.toFixed(3)}</div>
+        <div className='ModalShipInfoPiece'>Долгота:<br></br>{modalData.lon.toFixed(3)}</div>
       </div>
-      <div className='ModalShipInfo'>
-        <div>Скорость: {modalData.speed.toFixed(2)}</div>
-        <div>Долгота: {modalData.lon.toFixed(3)}</div>
+      <div className='ModalRouteButtonContainer'>
+        <button className="ModalRouteButton" onClick={() => onClickRoute(modalData.ship_id)}>Показать маршрут</button>
       </div>
-      <button className="ModalRouteButton" onClick={() => onClickRoute(modalData.ship_id)}>Показать маршрут</button>
     </div>
   )
 }
@@ -108,6 +109,7 @@ const App = () => {
   const handleStartShipsClick = async () => {
     try {
       setSimulation(true);
+      setRoute(null);
       fetchInitialData();
       const response = await axios.get(`http://localhost:8000/ships/move`);
       setSimulation(false);
@@ -137,7 +139,6 @@ const App = () => {
       <header>
         <h1>ShipRadar</h1>
         <button disabled={simulation} onClick={() => handleStartShipsClick()} className='start-button'>Начать движение кораблей</button>
-
       </header>
       <div>
         <YMaps>
@@ -145,7 +146,6 @@ const App = () => {
             defaultState={{ center: [59.95, 30], zoom: 11 }}
             options={{ mapAutoFit: true }}
             width="100vw" height="100vh"
-
           >
             {
               Object.keys(ships).map((shipId) =>
